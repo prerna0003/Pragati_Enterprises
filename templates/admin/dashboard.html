@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<div class="row mt-4">
+
+    <div class="col-md-4">
+
+        <div class="card p-4">
+
+            <h5>Total Products</h5>
+
+            <h2>{{ total_products }}</h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card p-4">
+
+            <h5>Total Orders</h5>
+
+            <h2>0</h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card p-4">
+
+            <h5>Total Customers</h5>
+
+            <h2>0</h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
