@@ -73,5 +73,21 @@ def products():
         products=all_products
     )
 
+@app.route("/admin/delete-product/<int:id>")
+def delete_product(id):
+
+    product = Product.query.get_or_404(id)
+
+    # Delete image if it exists
+    if product.image:
+        image_path = os.path.join(app.config["UPLOAD_FOLDER"], product.image)
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
+    db.session.delete(product)
+    db.session.commit()
+
+    return redirect(url_for("products"))
+
 if __name__ == "__main__":
     app.run(debug=True)
