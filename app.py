@@ -17,12 +17,12 @@ with app.app_context():
 @app.route("/")
 def home():
 
-    products = Product.query.all()
+    products = Product.query.filter_by(is_new=True).all()
 
     return render_template(
         "index.html",
         products=products
-        )
+    )
 
 @app.route("/admin")
 def admin():

@@ -1,304 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragati Enterprises</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" 
-    integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+{% extends "base.html" %}
 
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">Pragati Enterprises</a>
-                <ul class="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#shop">Shop</a></li>
-                    <li><a href="#shop">New Arrivals</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                  <li>  <form class="d-flex" role="search">
-              <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn0" type="submit">Search</button>
-            </form>
-            </li>
-             </ul>   
-                <div class="icons">
-                    <span class="mobile-menu">☰</span>
-                    <span id="cart-icon"><i class="bi bi-cart3"></i> <span class="cart-count">0</span></span>
-                </div>
-                
-            </nav>
-        </div>
-    </header>
+{% block title %}
+Pragati Enterprises
+{% endblock %}
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Classic Styles, Modern You.</h1>
-            <p>Discover our exclusive collection of sarees and Dresss that embody tradition, culture, and contemporary style.</p>
-            <a href="#shop" class="cta-button">Shop Now</a>
-        </div>
-    </section>
+{% block content %}
 
-    <!-- Categories Section -->
-    <section class="categories" id="categories">
-        <div class="container">
-            <h2 class="section-title">Shop By Category</h2>
-            <div class="category-grid">
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/B1.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Banarasi Silk </h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/kanjivaram.jpeg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Kanjivaram Silk</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/C1.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Chanderi Silk</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/tussar-silk-design.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Tussar Silk</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/kurti.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Kurtis</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/top.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Top Wear</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                 <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/bottom.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Bottom Wear</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="{{ url_for('static', filename='images/children.jpg') }}">
-                    </div>
-                    <div class="category-info">
-                        <h3>Childrens Wear</h3>
-                        <a href="#" class="cta-button">Explore</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero">
 
-    <!-- Featured Products -->
-    <section class="featured-products" id="shop">
-        <div class="container">
-            <h2 class="section-title">Featured Collection</h2>
-            <div class="product-grid" id="product-container">
-                <!-- Product cards will be dynamically added here by JavaScript -->
-            </div>
-        </div>
-    </section>
+    <div class="container text-center">
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://placehold.co/800x500" alt="Artisan carefully hand-weaving a silk saree on traditional wooden loom in Varanasi workshop">
-                </div>
-                <div class="about-text">
-                    <h2>Our Heritage</h2>
-                    <p>Founded in 1985, SilkRoute has been preserving the art of traditional Indian weaving while infusing contemporary designs that appeal to the modern woman.</p>
-                    <p>Each of our sarees is meticulously crafted by master weavers who have passed down their skills through generations, ensuring every thread tells a story.</p>
-                    <p>We work directly with artisans across India, providing fair wages and sustainable livelihood while promoting indigenous textile traditions.</p>
-                    <a href="#" class="cta-button">Our Story</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        <h1>Pragati Enterprises</h1>
 
-    <!-- Testimonials -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">What Our Customers Say</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "The quality of the Banarasi silk exceeded my expectations. I received countless compliments at my sister's wedding!"
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-img">
-                            <img src="https://placehold.co/100x100" alt="Smiling middle-aged Indian woman wearing the purchased saffron Kanjivaram saree in traditional style">
-                        </div>
-                        <div class="author-info">
-                            <h4>Priya K.</h4>
-                            <p>Mumbai</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "The colors are so vibrant and the zari work is exquisite. This has become my go-to boutique for all special occasions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-img">
-                            <img src="https://placehold.co/100x100" alt="Young professional woman in western attire holding up packaging from SilkRoute with a satisfied expression">
-                        </div>
-                        <div class="author-info">
-                            <h4>Ananya S.</h4>
-                            <p>Bangalore</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "I bought the Chanderi saree for daily wear - it's so comfortable yet elegant. The customer service was exceptional too!"
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-img">
-                            <img src="https://placehold.co/100x100" alt="Elderly woman dressed in simple white cotton saree smiling while examining the fine Chanderi fabric">
-                        </div>
-                        <div class="author-info">
-                            <h4>Meenakshi R.</h4>
-                            <p>Chennai</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <h3>Fashion for Every Generation</h3>
 
-    <!-- Newsletter -->
-    <section class="newsletter">
-        <div class="container">
-            <h2>Subscribe to Our Newsletter</h2>
-            <p>Get updates on new collections, exclusive offers, and styling tips delivered to your inbox.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-    </section>
+        <p>
+            Discover elegant sarees, trendy kurtis, stylish jeans and beautiful kids wear.
+        </p>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h3>Pragati Enterprises</h3>
-                    <p>Your Journey in Style Begins Here.</p>
-                    <div class="social-links">
-                        <a href="#">f</a>
-                        <a href="#">in</a>
-                        <a href="#">ins</a>
-                        <a href="#">pin</a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#shop">Shop</a></li>
-                        <li><a href="#categories">Categories</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Customer Care</h3>
-                    <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Order Tracking</a></li>
-                        <li><a href="#">Shipping Policy</a></li>
-                        <li><a href="#">Returns & Exchanges</a></li>
-                        <li><a href="#">FAQs</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Contact Us</h3>
-                    <ul>
-                        <li>123 Weavers Lane</li>
-                        <li>Beed 431122</li>
-                        <li>India</li>
-                        <li>+91 7972579257</li>
-                        <li>contact@pragatienterprises.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 PragatiEnterprises. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
+        <a href="#products" class="btn btn-warning btn-lg">
+            Shop Now
+        </a>
 
-    <!-- Cart Modal -->
-    <div class="modal" id="cart-modal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <div class="modal-header">
-                <h2>Your Shopping Cart</h2>
-            </div>
-            <div class="cart-items" id="cart-items-container">
-                <!-- Cart items will be dynamically added here by JavaScript -->
-            </div>
-            <div class="cart-summary">
-                <div class="summary-row">
-                    <span>Subtotal:</span>
-                    <span id="cart-subtotal">₹0</span>
-                </div>
-                <div class="summary-row">
-                    <span>Shipping:</span>
-                    <span id="cart-shipping">Free</span>
-                </div>
-                <div class="summary-row summary-total">
-                    <span>Total:</span>
-                    <span id="cart-total">₹0</span>
-                </div>
-                <button class="checkout-btn">Proceed to Checkout</button>
-            </div>
-        </div>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>  
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-</body>
-</html>
+
+</section>
+
+<section id="products" class="container py-5">
+
+    <h2 class="text-center mb-5">
+        New Arrivals
+    </h2>
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100 shadow">
+
+                <img
+                src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                class="card-img-top"
+                height="320"
+                style="object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h4>{{ product.name }}</h4>
+
+                    <p>{{ product.category }}</p>
+
+                    <h5>₹ {{ product.price }}</h5>
+
+                    <a href="#" class="btn btn-danger w-100">
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}
