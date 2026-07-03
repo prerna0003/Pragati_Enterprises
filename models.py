@@ -15,7 +15,7 @@ class Product(db.Model):
 
     stock = db.Column(db.Integer)
 
-    image = db.Column(db.String(255))
+    image = db.Column(db.String(255), nullable=True)
 
     description = db.Column(db.Text)
 

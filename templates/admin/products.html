@@ -12,21 +12,23 @@ Products
 
     <thead class="table-dark">
 
-        <tr>
+            <tr>
 
-            <th>ID</th>
+                <th>ID</th>
 
-            <th>Name</th>
+                <th>Image</th>
 
-            <th>Category</th>
+                <th>Name</th>
 
-            <th>Price</th>
+                <th>Category</th>
 
-            <th>Stock</th>
+                <th>Price</th>
 
-            <th>Action</th>
+                <th>Stock</th>
 
-        </tr>
+                <th>Action</th>
+
+            </tr>
 
     </thead>
 
@@ -38,7 +40,25 @@ Products
 
             <td>{{ product.id }}</td>
 
-            <td>{{ product.name }}</td>
+                <td>
+
+                {% if product.image %}
+
+                <img
+                src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                width="80"
+                height="80"
+                style="object-fit:cover;border-radius:10px;">
+
+                {% else %}
+
+                No Image
+
+                {% endif %}
+
+                </td>
+
+            <td>{{ product.name }}</td> 
 
             <td>{{ product.category }}</td>
 
