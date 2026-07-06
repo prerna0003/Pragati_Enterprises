@@ -3,7 +3,8 @@ from werkzeug.utils import secure_filename
 from flask import session
 from flask import Flask, render_template, request, redirect, url_for
 from config import Config
-from models import db, Product, Order , OrderItem
+from models import db, Product, Order, OrderItem, User
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "static/uploads"
@@ -11,6 +12,14 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config.from_object(Config)
 
 db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 with app.app_context():
     db.create_all()
@@ -198,24 +207,28 @@ def add_to_cart(id):
     return redirect(url_for("cart"))
 
 @app.route("/checkout", methods=["GET", "POST"])
+@login_required
 def checkout():
 
     cart = session.get("cart", {})
 
     if request.method == "POST":
 
+        name = request.form["name"]
+        phone = request.form["phone"]
+        address = request.form["address"]
+
         total = 0
 
         for product_id, qty in cart.items():
-
             product = Product.query.get(int(product_id))
-
             total += product.price * qty
 
         order = Order(
-            customer_name=request.form["name"],
-            phone=request.form["phone"],
-            address=request.form["address"],
+            user_id=current_user.id,
+            customer_name=name,
+            phone=phone,
+            address=address,
             total_amount=total
         )
 
@@ -223,7 +236,6 @@ def checkout():
         db.session.commit()
 
         for product_id, qty in cart.items():
-
             product = Product.query.get(int(product_id))
 
             item = OrderItem(
@@ -242,7 +254,6 @@ def checkout():
         return redirect(url_for("order_success"))
 
     return render_template("checkout.html")
-
 @app.route("/order-success")
 def order_success():
 
@@ -281,6 +292,73 @@ def update_order_status(id):
     db.session.commit()
 
     return redirect(url_for("view_order", id=id))
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    if request.method == "POST":
+
+        # Check if email already exists
+        existing_user = User.query.filter_by(
+            email=request.form["email"]
+        ).first()
+
+        if existing_user:
+            return "Email already registered."
+
+        user = User(
+            name=request.form["name"],
+            email=request.form["email"]
+        )
+
+        user.set_password(request.form["password"])
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        user = User.query.filter_by(
+            email=request.form["email"]
+        ).first()
+
+        if user and user.check_password(request.form["password"]):
+
+            login_user(user)
+
+            return redirect(url_for("home"))
+
+        return "Invalid email or password."
+
+    return render_template("login.html")
+
+@app.route("/logout")
+@login_required
+def logout():
+
+    logout_user()
+
+    return redirect(url_for("home"))
+
+@app.route("/my-orders")
+@login_required
+def my_orders():
+
+    orders = Order.query.filter_by(
+    user_id=current_user.id
+).order_by(Order.id.desc()).all()
+
+    return render_template(
+        "my_orders.html",
+        orders=orders
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

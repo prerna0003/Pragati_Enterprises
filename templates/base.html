@@ -63,6 +63,42 @@
     </a>
 </li>
 
+{% if current_user.is_authenticated %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('my_orders') }}">
+        📦 My Orders
+    </a>
+</li>
+
+<li class="nav-item">
+    <span class="nav-link">
+        👋 {{ current_user.name }}
+    </span>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout') }}">
+        Logout
+    </a>
+</li>
+
+{% else %}
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('login') }}">
+        Login
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('register') }}">
+        Register
+    </a>
+</li>
+
+{% endif %}
+
             </ul>
 
         </div>
