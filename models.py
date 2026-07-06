@@ -47,3 +47,5 @@ class OrderItem(db.Model):
     quantity = db.Column(db.Integer)
 
     price = db.Column(db.Float)
+
+    product = db.relationship("Product")

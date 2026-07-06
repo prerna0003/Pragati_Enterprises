@@ -1,0 +1,112 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+Order Details
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>Order #{{ order.id }}</h2>
+
+<hr>
+
+<h5>Customer Information</h5>
+
+<p><strong>Name:</strong> {{ order.customer_name }}</p>
+
+<p><strong>Phone:</strong> {{ order.phone }}</p>
+
+<p><strong>Address:</strong> {{ order.address }}</p>
+
+<hr>
+
+<hr>
+
+<h5>Order Status</h5>
+
+<form method="POST" action="{{ url_for('update_order_status', id=order.id) }}">
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <select class="form-select" name="status">
+
+                <option value="Pending"
+                    {% if order.status=="Pending" %}selected{% endif %}>
+                    Pending
+                </option>
+
+                <option value="Confirmed"
+                    {% if order.status=="Confirmed" %}selected{% endif %}>
+                    Confirmed
+                </option>
+
+                <option value="Packed"
+                    {% if order.status=="Packed" %}selected{% endif %}>
+                    Packed
+                </option>
+
+                <option value="Shipped"
+                    {% if order.status=="Shipped" %}selected{% endif %}>
+                    Shipped
+                </option>
+
+                <option value="Delivered"
+                    {% if order.status=="Delivered" %}selected{% endif %}>
+                    Delivered
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button class="btn btn-success">
+                Update
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+
+<hr>
+
+<h5>Products</h5>
+
+<table class="table table-bordered">
+
+<tr>
+
+<th>Product</th>
+
+<th>Quantity</th>
+
+<th>Price</th>
+
+</tr>
+
+{% for item in items %}
+
+<tr>
+
+<td>{{ item.product.name }}</td>
+
+<td>{{ item.quantity }}</td>
+
+<td>₹ {{ item.price }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<h3>Total ₹ {{ order.total_amount }}</h3>
+
+{% endblock %}

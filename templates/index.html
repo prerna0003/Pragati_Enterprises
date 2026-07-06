@@ -36,19 +36,18 @@ Shop by Category
 
 <div class="row text-center">
 
-<div class="col-md-3 mb-4">
+<a href="{{ url_for('home', category='saree') }}"
+   class="text-decoration-none text-dark">
 
 <div class="card p-4">
-
-<h1>🥻</h1>
-
-<h4>Sarees</h4>
-
+    <h1>🥻</h1>
+    <h4>Sarees</h4>
 </div>
 
-</div>
+</a>
 
-<div class="col-md-3 mb-4">
+<a href="{{ url_for('home', category='kurti') }}"
+   class="text-decoration-none text-dark">
 
 <div class="card p-4">
 
@@ -58,9 +57,10 @@ Shop by Category
 
 </div>
 
-</div>
+</a>
 
-<div class="col-md-3 mb-4">
+<a href="{{ url_for('home', category='jeans') }}"
+   class="text-decoration-none text-dark">
 
 <div class="card p-4">
 
@@ -70,9 +70,10 @@ Shop by Category
 
 </div>
 
-</div>
+</a>
 
-<div class="col-md-3 mb-4">
+<a href="{{ url_for('home', category='kids wear') }}"
+   class="text-decoration-none text-dark">
 
 <div class="card p-4">
 
@@ -82,7 +83,7 @@ Shop by Category
 
 </div>
 
-</div>
+</a>
 
 </div>
 
@@ -90,13 +91,57 @@ Shop by Category
 
 </section>
 
+<div class="container my-4">
+
+    <form method="GET" action="{{ url_for('home') }}">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                class="form-control"
+                name="search"
+                placeholder="Search products..."
+                value="{{ search }}">
+
+            <button class="btn btn-danger" type="submit">
+
+                🔍 Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<div class="text-center mt-3">
+
+    <a href="{{ url_for('home') }}"
+       class="btn btn-outline-secondary">
+
+        Show All Products
+
+    </a>
+
+</div>
+
 <section id="products" class="container py-5">
 
     <h2 class="text-center mb-5">
-        New Arrivals
-    </h2>
+
+{% if category %}
+    {{ category.title() }}
+{% else %}
+    New Arrivals
+{% endif %}
+
+</h2>
 
     <div class="row">
+
+    {% if products %}
 
         {% for product in products %}
 
@@ -105,10 +150,10 @@ Shop by Category
             <div class="card h-100 shadow">
 
                 <img
-                src="{{ url_for('static', filename='uploads/' + product.image) }}"
-                class="card-img-top"
-                height="320"
-                style="object-fit:cover;">
+                    src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                    class="card-img-top"
+                    height="320"
+                    style="object-fit:cover;">
 
                 <div class="card-body">
 
@@ -119,9 +164,9 @@ Shop by Category
                     <h5>₹ {{ product.price }}</h5>
 
                     <a href="{{ url_for('product_details', id=product.id) }}"
-   class="btn btn-danger w-100">
-    View Details
-</a>
+                       class="btn btn-danger w-100">
+                        View Details
+                    </a>
 
                 </div>
 
@@ -131,7 +176,23 @@ Shop by Category
 
         {% endfor %}
 
+    {% else %}
+
+    <div class="col-12 text-center py-5">
+
+        <h3>🔍 No products found</h3>
+
+        <p>Try searching with another keyword.</p>
+
+        <a href="{{ url_for('home') }}" class="btn btn-outline-danger">
+            Show All Products
+        </a>
+
     </div>
+
+    {% endif %}
+
+</div>
 
 </section>
 

@@ -15,14 +15,29 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+from sqlalchemy import or_
+
 @app.route("/")
 def home():
 
-    products = Product.query.filter_by(is_new=True).all()
+    search = request.args.get("search", "")
+    category = request.args.get("category", "")
+
+    query = Product.query
+
+    if search:
+        query = query.filter(Product.name.ilike(f"%{search}%"))
+
+    if category:
+        query = query.filter(Product.category.ilike(f"%{category}%"))
+
+    products = query.all()
 
     return render_template(
         "index.html",
-        products=products
+        products=products,
+        search=search,
+        category=category
     )
 
 @app.route("/admin")
@@ -232,6 +247,40 @@ def checkout():
 def order_success():
 
     return render_template("order_success.html")
+
+@app.route("/admin/orders")
+def admin_orders():
+
+    orders = Order.query.order_by(Order.id.desc()).all()
+
+    return render_template(
+        "admin/orders.html",
+        orders=orders
+    )
+
+@app.route("/admin/order/<int:id>")
+def view_order(id):
+
+    order = Order.query.get_or_404(id)
+
+    items = OrderItem.query.filter_by(order_id=id).all()
+
+    return render_template(
+        "admin/order_details.html",
+        order=order,
+        items=items
+    )
+
+@app.route("/admin/order/<int:id>/status", methods=["POST"])
+def update_order_status(id):
+
+    order = Order.query.get_or_404(id)
+
+    order.status = request.form["status"]
+
+    db.session.commit()
+
+    return redirect(url_for("view_order", id=id))
 
 if __name__ == "__main__":
     app.run(debug=True)
