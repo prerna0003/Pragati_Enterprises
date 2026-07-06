@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 from flask import session
 from flask import Flask, render_template, request, redirect, url_for
 from config import Config
-from models import db, Product
+from models import db, Product, Order , OrderItem
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "static/uploads"
@@ -181,6 +181,57 @@ def add_to_cart(id):
     session["cart"] = cart
 
     return redirect(url_for("cart"))
+
+@app.route("/checkout", methods=["GET", "POST"])
+def checkout():
+
+    cart = session.get("cart", {})
+
+    if request.method == "POST":
+
+        total = 0
+
+        for product_id, qty in cart.items():
+
+            product = Product.query.get(int(product_id))
+
+            total += product.price * qty
+
+        order = Order(
+            customer_name=request.form["name"],
+            phone=request.form["phone"],
+            address=request.form["address"],
+            total_amount=total
+        )
+
+        db.session.add(order)
+        db.session.commit()
+
+        for product_id, qty in cart.items():
+
+            product = Product.query.get(int(product_id))
+
+            item = OrderItem(
+                order_id=order.id,
+                product_id=product.id,
+                quantity=qty,
+                price=product.price
+            )
+
+            db.session.add(item)
+
+        db.session.commit()
+
+        session["cart"] = {}
+
+        return redirect(url_for("order_success"))
+
+    return render_template("checkout.html")
+
+@app.route("/order-success")
+def order_success():
+
+    return render_template("order_success.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

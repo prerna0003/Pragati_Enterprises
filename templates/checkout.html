@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h2>Checkout</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Name</label>
+<input class="form-control" name="name" required>
+</div>
+
+<div class="mb-3">
+<label>Phone</label>
+<input class="form-control" name="phone" required>
+</div>
+
+<div class="mb-3">
+<label>Address</label>
+<textarea class="form-control" name="address" required></textarea>
+</div>
+
+<button class="btn btn-success">
+Place Order
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

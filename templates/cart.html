@@ -61,9 +61,10 @@ Shopping Cart
 
         <h3>Total: ₹ {{ total }}</h3>
 
-        <button class="btn btn-success btn-lg">
-            Proceed to Checkout
-        </button>
+        <a href="{{ url_for('checkout') }}"
+   class="btn btn-success btn-lg">
+    Proceed to Checkout
+</a>
 
     </div>
 
