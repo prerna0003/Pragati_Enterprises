@@ -26,6 +26,70 @@ Pragati Enterprises
 
 </section>
 
+<section id="categories" class="py-5">
+
+<div class="container">
+
+<h2 class="text-center mb-5">
+Shop by Category
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-3 mb-4">
+
+<div class="card p-4">
+
+<h1>🥻</h1>
+
+<h4>Sarees</h4>
+
+</div>
+
+</div>
+
+<div class="col-md-3 mb-4">
+
+<div class="card p-4">
+
+<h1>👗</h1>
+
+<h4>Kurtis</h4>
+
+</div>
+
+</div>
+
+<div class="col-md-3 mb-4">
+
+<div class="card p-4">
+
+<h1>👖</h1>
+
+<h4>Jeans</h4>
+
+</div>
+
+</div>
+
+<div class="col-md-3 mb-4">
+
+<div class="card p-4">
+
+<h1>🧒</h1>
+
+<h4>Kids Wear</h4>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 <section id="products" class="container py-5">
 
     <h2 class="text-center mb-5">
@@ -54,9 +118,10 @@ Pragati Enterprises
 
                     <h5>₹ {{ product.price }}</h5>
 
-                    <a href="#" class="btn btn-danger w-100">
-                        View Details
-                    </a>
+                    <a href="{{ url_for('product_details', id=product.id) }}"
+   class="btn btn-danger w-100">
+    View Details
+</a>
 
                 </div>
 

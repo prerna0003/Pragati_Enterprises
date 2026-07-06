@@ -1,5 +1,6 @@
 import os
 from werkzeug.utils import secure_filename
+from flask import session
 from flask import Flask, render_template, request, redirect, url_for
 from config import Config
 from models import db, Product
@@ -123,6 +124,63 @@ def edit_product(id):
         "admin/edit_product.html",
         product=product
     )
+
+@app.route("/product/<int:id>")
+def product_details(id):
+
+    product = Product.query.get_or_404(id)
+
+    return render_template(
+        "product_details.html",
+        product=product
+    )
+
+@app.route("/cart")
+def cart():
+
+    cart = session.get("cart", {})
+
+    products = []
+
+    total = 0
+
+    for product_id, quantity in cart.items():
+
+        product = Product.query.get(int(product_id))
+
+        if product:
+
+            subtotal = product.price * quantity
+
+            total += subtotal
+
+            products.append({
+                "product": product,
+                "quantity": quantity,
+                "subtotal": subtotal
+            })
+
+    return render_template(
+        "cart.html",
+        products=products,
+        total=total
+    )
+
+@app.route("/add-to-cart/<int:id>")
+def add_to_cart(id):
+
+    cart = session.get("cart", {})
+
+    product_id = str(id)
+
+    if product_id in cart:
+        cart[product_id] += 1
+    else:
+        cart[product_id] = 1
+
+    session["cart"] = cart
+
+    return redirect(url_for("cart"))
 
 if __name__ == "__main__":
     app.run(debug=True)
